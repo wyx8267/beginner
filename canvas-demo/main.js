@@ -1,5 +1,6 @@
 var yyy = document.getElementById('xxx');
 var context = xxx.getContext('2d');
+var lineWidth = 5;
 
 autoSetCanvasSize(yyy);
 if (document.body.ontouchstart !== undefined) {
@@ -13,14 +14,70 @@ if (document.body.ontouchstart !== undefined) {
 var eraserEnabled = false;
 var eraser = document.getElementById('eraser');
 var brush = document.getElementById('brush');
-var actions = document.getElementById('actions');
 eraser.onclick = function () {
     eraserEnabled = true;
-    actions.className = 'x';
+    eraser.classList.add('active');
+    brush.classList.remove('active');
 };
 brush.onclick = function () {
     eraserEnabled = false;
-    actions.className = '';
+    brush.classList.add('active');
+    eraser.classList.remove('active');
+};
+
+var red = document.getElementById('red');
+var green = document.getElementById('green');
+var blue = document.getElementById('blue');
+var black = document.getElementById('black');
+red.onclick = function () {
+    context.strokeStyle = 'red';
+    red.classList.add('active');
+    green.classList.remove('active');
+    blue.classList.remove('active');
+    black.classList.remove('active');
+};
+green.onclick = function () {
+    context.strokeStyle = 'green';
+    green.classList.add('active');
+    red.classList.remove('active');
+    blue.classList.remove('active');
+    black.classList.remove('active');
+};
+blue.onclick = function () {
+    context.strokeStyle = 'blue';
+    blue.classList.add('active');
+    green.classList.remove('active');
+    red.classList.remove('active');
+    black.classList.remove('active');
+};
+black.onclick = function () {
+    context.strokeStyle = 'black';
+    black.classList.add('active');
+    green.classList.remove('active');
+    red.classList.remove('active');
+    blue.classList.remove('active');
+};
+
+var thin = document.getElementById('thin');
+var thick = document.getElementById('thick');
+thin.onclick = function () {
+    lineWidth = 5;
+}
+thick.onclick = function () {
+    lineWidth = 10;
+}
+
+document.getElementById('clear').onclick = function () {
+    context.clearRect(0, 0, yyy.width, yyy.height);
+};
+document.getElementById('download').onclick = function () {
+    var url = yyy.toDataURL("image/png");
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = 'wodehua';
+    a.target = '_blank';
+    a.click();
 };
 
 //以下为工具函数
@@ -91,17 +148,10 @@ function setCanvasSize(canvas) {
     canvas.height = pageHeight;
 }
 
-function drawCircle(x, y, radius) {
-    context.beginPath();
-    context.arc(x, y, radius, 0, Math.PI * 2);
-    context.fill();
-    context.closePath();
-}
-
 function drawLine(x1, y1, x2, y2) {
     context.beginPath();
     context.moveTo(x1, y1);
-    context.lineWidth = 5;
+    context.lineWidth = lineWidth;
     context.lineTo(x2, y2);
     context.stroke();
     context.closePath();
