@@ -1,0 +1,61 @@
+body {
+    background-color: #ace;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 500px;
+    background: #fff;
+}
+
+.imagePicker {
+    margin-top: 50px;
+    width: 120px;
+    height: 120px;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.imagePicker img {
+    max-width: 160%;
+    max-height: 160%;
+    border: 1px solid green;
+    vertical-align: top;
+}
+
+.imagePicker input[type=file] {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.imagePicker .mask {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+.imagePicker:hover .mask {
+    display: flex;
+}
