@@ -2,14 +2,27 @@ let n
 let imageLength = $('.images>img').length
 init()
 
-setInterval(() => {
-    
-    makeLeave(getImage(n)).one('transitionend', (e)=>{
+let timer = setInterval(() => {
+    makeLeave(getImage(n)).one('transitionend', (e) => {
         makeEnter($(e.currentTarget))
     })
-    makeCurrent(getImage(n+1))
+    makeCurrent(getImage(n + 1))
     n++
 }, 3000);
+
+document.addEventListener('visibilitychange', function (e) {
+    if (document.hidden) {
+        window.clearInterval(timer)
+    } else {
+        timer = setInterval(() => {
+            makeLeave(getImage(n)).one('transitionend', (e) => {
+                makeEnter($(e.currentTarget))
+            })
+            makeCurrent(getImage(n + 1))
+            n++
+        }, 3000);
+    }
+})
 
 function getImage(n) {
     return $(`.images>img:nth-child(${x(n, imageLength)})`)
@@ -18,7 +31,7 @@ function getImage(n) {
 function x(n, length) {
     if (n > length) {
         n = n % length
-        if(n === 0){
+        if (n === 0) {
             n = length
         }
     }
@@ -26,7 +39,7 @@ function x(n, length) {
 }
 
 function init() {
-    n =1
+    n = 1
     $(`.images>img:nth-child(${x(n, imageLength)})`).addClass('current').siblings().addClass('enter')
 }
 
