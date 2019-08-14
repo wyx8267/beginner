@@ -155,13 +155,21 @@ var server = http.createServer(function (request, response) {
             }
             response.end()
         })
-    } else if (path == '/main.js') {
-        let string = fs.readFileSync('./main.js', 'utf8')
+    } else if (path == '/js/main.js') {
+        let string = fs.readFileSync('./js/main.js', 'utf8')
         response.statusCode = 200
-        response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
+        response.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+        response.setHeader('Cache-Control', 'max-age=31536000')
         response.write(string)
         response.end()
-    } else {
+    } else if(path==='/css/default.css'){
+        let string = fs.readFileSync('./css/default.css', 'utf8')
+        response.statusCode = 200
+        response.setHeader('Content-Type', 'text/css; charset=utf-8')
+        response.setHeader('Cache-Control', 'max-age=31536000')
+        response.write(string)
+        response.end()
+    }else {
         response.statusCode = 404
         response.setHeader('Content-Type', 'text/html; charset=utf-8')
         response.write(`{
